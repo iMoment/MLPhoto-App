@@ -37,8 +37,20 @@ class CameraViewController: UIViewController {
                 captureSession.addInput(input)
             }
             
-        } catch {
+            self.captureOutput = AVCapturePhotoOutput()
             
+            if captureSession.canAddOutput(captureOutput) == true {
+                captureSession.addOutput(captureOutput!)
+                
+                self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+                self.previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+                self.previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+                
+                self.cameraView.layer.addSublayer(previewLayer!)
+                self.captureSession.startRunning()
+            }
+        } catch {
+            debugPrint(error.localizedDescription)
         }
     }
 
