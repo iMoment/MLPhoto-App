@@ -81,6 +81,10 @@
                                     <action selector="flashButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g08-vI-fM6"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="v27-Tb-NKv">
+                                <rect key="frame" x="307" y="573" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -90,14 +94,17 @@
                             <constraint firstItem="yiy-KR-jRa" firstAttribute="top" secondItem="6wP-7h-qBO" secondAttribute="bottom" constant="20" id="I58-JV-Ieq"/>
                             <constraint firstAttribute="trailing" secondItem="3rr-vZ-jk5" secondAttribute="trailing" constant="20" id="OUc-Ox-oDx"/>
                             <constraint firstItem="W3X-yA-ctU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Rit-fz-xcz"/>
+                            <constraint firstItem="v27-Tb-NKv" firstAttribute="centerX" secondItem="vKU-re-puN" secondAttribute="centerX" id="TGl-R4-L3U"/>
                             <constraint firstItem="6wP-7h-qBO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="UKl-6j-yuI"/>
                             <constraint firstItem="W3X-yA-ctU" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="Uv3-TA-box"/>
                             <constraint firstItem="W3X-yA-ctU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="VRD-Be-fEt"/>
                             <constraint firstItem="W3X-yA-ctU" firstAttribute="bottom" secondItem="yiy-KR-jRa" secondAttribute="top" id="adG-Kb-ggD"/>
                             <constraint firstAttribute="trailing" secondItem="vKU-re-puN" secondAttribute="trailing" constant="20" id="bJE-W3-437"/>
+                            <constraint firstItem="v27-Tb-NKv" firstAttribute="centerY" secondItem="vKU-re-puN" secondAttribute="centerY" id="iLU-Gt-bOn"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="v27-Tb-NKv" id="zec-AG-sFV"/>
                         <outlet property="cameraView" destination="W3X-yA-ctU" id="OQ2-rC-O6g"/>
                         <outlet property="confidenceLabel" destination="alg-Hq-vOY" id="VM7-1H-hyn"/>
                         <outlet property="flashButton" destination="6wP-7h-qBO" id="dGV-qv-Jvi"/>

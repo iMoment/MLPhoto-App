@@ -33,6 +33,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var confidenceLabel: UILabel!
     @IBOutlet weak var flashButton: RoundedShadowButton!
     @IBOutlet weak var snapshotImageView: RoundedShadowImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -77,9 +78,14 @@ class CameraViewController: UIViewController {
         super.viewDidAppear(animated)
         self.previewLayer.frame = self.cameraView.bounds
         speechSynthesizer.delegate = self
+        self.activityIndicator.isHidden = true
     }
     
     @objc func didTapCameraView(_ tapGesture: UITapGestureRecognizer) {
+        self.cameraView.isUserInteractionEnabled = false
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        
         let settings = AVCapturePhotoSettings()
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         
@@ -156,7 +162,8 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 extension CameraViewController: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         //  TODO: Text to speech
-        
+        self.cameraView.isUserInteractionEnabled = true
+        self.activityIndicator.stopAnimating()
     }
 }
 
