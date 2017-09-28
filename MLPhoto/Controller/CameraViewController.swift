@@ -11,14 +11,19 @@ import AVFoundation
 import CoreML
 import Vision
 
+enum FlashState {
+    case off
+    case on
+}
+
 class CameraViewController: UIViewController {
     
     //  MARK: Variables
     var captureSession: AVCaptureSession!
     var captureOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    
     var photoData: Data?
+    var flashControlState = FlashState.off
     
     //  MARK: Outlets
     @IBOutlet weak var cameraView: UIView!
@@ -76,6 +81,12 @@ class CameraViewController: UIViewController {
         let settings = AVCapturePhotoSettings()
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         
+        if flashControlState == .off {
+            settings.flashMode = .off
+        } else {
+            settings.flashMode = .on
+        }
+        
         captureOutput.capturePhoto(with: settings, delegate: self)
     }
     
@@ -92,6 +103,17 @@ class CameraViewController: UIViewController {
                 self.confidenceLabel.text = "CONFIDENCE: \(Int(classification.confidence * 100))%"
                 break
             }
+        }
+    }
+    
+    @IBAction func flashButtonPressed(_ sender: RoundedShadowButton) {
+        switch flashControlState {
+        case .off:
+            flashButton.setTitle("FLASH ON", for: .normal)
+            flashControlState = .on
+        case .on:
+            flashButton.setTitle("FLASH OFF", for: .normal)
+            flashControlState = .off
         }
     }
 }
