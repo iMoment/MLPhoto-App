@@ -22,6 +22,7 @@ class CameraViewController: UIViewController {
     var captureSession: AVCaptureSession!
     var captureOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var speechSynthesizer = AVSpeechSynthesizer()
     var photoData: Data?
     var flashControlState = FlashState.off
     
@@ -75,6 +76,7 @@ class CameraViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.previewLayer.frame = self.cameraView.bounds
+        speechSynthesizer.delegate = self
     }
     
     @objc func didTapCameraView(_ tapGesture: UITapGestureRecognizer) {
@@ -95,12 +97,18 @@ class CameraViewController: UIViewController {
         
         for classification in results {
             if classification.confidence < 0.5 {
-                self.identificationLabel.text = "I'm not sure what this is. Please try again."
+                let unknownObjectMessage = "I'm not sure what this is. Please try again."
+                self.identificationLabel.text = unknownObjectMessage
+                self.synthesizeSpeech(fromString: unknownObjectMessage)
                 self.confidenceLabel.text = ""
                 break
             } else {
-                self.identificationLabel.text = classification.identifier
-                self.confidenceLabel.text = "CONFIDENCE: \(Int(classification.confidence * 100))%"
+                let identification = classification.identifier
+                let confidence = Int(classification.confidence * 100)
+                self.identificationLabel.text = identification
+                self.confidenceLabel.text = "CONFIDENCE: \(confidence)%"
+                let completeSentence = "This looks like a \(identification) and I'm \(confidence) percent sure."
+                self.synthesizeSpeech(fromString: completeSentence)
                 break
             }
         }
@@ -115,6 +123,11 @@ class CameraViewController: UIViewController {
             flashButton.setTitle("FLASH OFF", for: .normal)
             flashControlState = .off
         }
+    }
+    
+    func synthesizeSpeech(fromString chosenString: String) {
+        let speechUtterance = AVSpeechUtterance(string: chosenString)
+        speechSynthesizer.speak(speechUtterance)
     }
 }
 
@@ -140,20 +153,12 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+extension CameraViewController: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        //  TODO: Text to speech
+        
+    }
+}
 
 
 
