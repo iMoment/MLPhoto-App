@@ -171,11 +171,3 @@ extension CameraViewController: AVSpeechSynthesizerDelegate {
 
 
 
-
-
-
-
-
-
-
-
