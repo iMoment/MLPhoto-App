@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraViewController: UIViewController {
+    
+    //  MARK: Variables
+    var captureSession: AVCaptureSession!
+    var captureOutput: AVCapturePhotoOutput!
+    var previewLayer: AVCaptureVideoPreviewLayer!
     
     //  MARK: Outlets
     @IBOutlet weak var cameraView: UIView!
@@ -17,8 +23,61 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var confidenceLabel: UILabel!
     @IBOutlet weak var flashButton: RoundedShadowButton!
     @IBOutlet weak var snapshotImageView: RoundedShadowImageView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.captureSession = AVCaptureSession()
+        self.captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+        
+        let backgroundCamera = AVCaptureDevice.default(for: AVMediaType.video)
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: backgroundCamera!)
+            if captureSession.canAddInput(input) == true {
+                captureSession.addInput(input)
+            }
+            
+        } catch {
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.previewLayer.frame = self.cameraView.bounds
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
