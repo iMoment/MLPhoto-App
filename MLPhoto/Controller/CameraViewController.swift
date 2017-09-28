@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CameraViewController.swift
 //  MLPhoto
 //
 //  Created by Stanley Pan on 28/09/2017.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
